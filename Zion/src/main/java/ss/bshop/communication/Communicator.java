@@ -15,6 +15,7 @@ import android.util.Log;
 
 import ss.bshop.mobile.entities.ArticleMobile;
 import ss.bshop.mobile.entities.OutletMobile;
+import ss.bshop.mobile.entities.VisitMobile;
 
 public class Communicator {
 
@@ -23,18 +24,29 @@ public class Communicator {
 	static {
 		mediaTypes.add(MediaType.APPLICATION_JSON);
 	}
-	private static final String uri = "mobile/get";
+	private static final String uri = "/mobile/";
 	private static final String TAG = "Communicator";
 	@SuppressWarnings("unchecked")
 	public static List<OutletMobile> getOutletsForToday(String username) {
 		List response = Communicator.
-				performRequest(uri + "outlets/" + username);
+				performRequest(uri + "getoutlets/" + username);
 		return response;
 	}
 
 	public static List<ArticleMobile> getArticles() {
-		List response = Communicator.performRequest(uri + "goods");
+		List response = Communicator.performRequest(uri + "getgoods");
 		return response;
+	}
+
+	public void addOrder(VisitMobile visit) {
+		HttpHeaders requestHeaders = new HttpHeaders();
+		requestHeaders.setAccept(mediaTypes);
+		HttpEntity<VisitMobile> entity = new HttpEntity(visit, requestHeaders);
+		RestTemplate template = new RestTemplate();
+		template.getMessageConverters().
+				add(new MappingJacksonHttpMessageConverter());
+		String finalUri = uri + "addvisit";
+		template.exchange(finalUri, HttpMethod.POST, entity, Void.class);
 	}
 
 	private static List performRequest(String finalUri) {
