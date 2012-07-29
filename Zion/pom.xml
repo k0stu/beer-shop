@@ -41,7 +41,7 @@
             <version>0.1</version>
         </dependency>
  <!-- Возможно, для добавления jar в репозиторий нужна следующая команда -->
- <!-- mvn install:install-file -Dfile=lib/ss-bshop-mobile-entities.jar -DgroupId=ss.bshop -DartifactId=mobileentities -Dversion=0.1 -Dpackaging=jar -Durl=file:///$PROJECTROOT/lib/ -DrepositoryId=localFileRepository -->
+ <!-- mvn install:install-file -Dfile=lib/ss-bshop-mobile-entities.jar -DgroupId=ss.bshop.mobile -DartifactId=entities -Dversion=0.1 -Dpackaging=jar -DrepositoryId=localFileRepository -->
     </dependencies>
 
     <build>
