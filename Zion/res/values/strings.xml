@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello Zion!</string>
+    <string name="title">BeerShop mobile application ver 1.0.0.0001</string>
     <string name="app_name">Zion</string>
+    
+    <!-- Select action labels -->
+    <string name="create">Create order / return</string>
+    <string name="openMap">Open map</string>
+    <string name="openJournal">Open journal</string>
+    <string name="exit">Exit</string>
+    
+    <!-- Create visit labels -->
+    <string name="createVisit">Create visit</string>
+    <string name="visitInfo">Visit info:</string>
+    <string name="createOrder">Create order</string>
+    <string name="saveVisit">Save</string>
+    <string name="closeVisit">Close</string>
+    
+    <!--  Create order labels -->
+    <string name="createOrderLabel">Create order</string>
+    <string name="orderTypeLabel">Order type:</string>
 </resources>

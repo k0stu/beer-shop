@@ -1,10 +1,15 @@
 package ss.bshop;
 
+import ss.bshop.R;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 
-public class HelloAndroidActivity extends Activity {
+public class SelectActionActivity extends Activity {
 
     private static String TAG = "Zion";
 
@@ -19,6 +24,15 @@ public class HelloAndroidActivity extends Activity {
         super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate");
         setContentView(R.layout.main);
+        Button create = (Button) findViewById(R.id.createButton);
+        create.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent createVisit = new Intent(SelectActionActivity.this,
+						CreateVisitActivity.class);
+				startActivity(createVisit);
+			}
+        });
     }
 
 }
