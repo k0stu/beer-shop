@@ -15,8 +15,19 @@
     <string name="createOrder">Create order</string>
     <string name="saveVisit">Save</string>
     <string name="closeVisit">Close</string>
+    <string name="outletsLabel">Outlet:</string>
     
     <!--  Create order labels -->
     <string name="createOrderLabel">Create order</string>
     <string name="orderTypeLabel">Order type:</string>
+    	<!-- Spinner data array for Order type -->
+    	<string-array name="orderType">
+    	    <item>Order</item>
+    	    <item>Return</item>
+    	</string-array>
+    <string name="addItemLabel">Add item</string>
+    <string name="editItemLabel">Edit item</string>
+    <string name="removeItemLabel">Remove item</string>
+    <string name="saveOrderLabel">Save</string>
+    <string name="cancelOrderLabel">Cancel</string>
 </resources>
