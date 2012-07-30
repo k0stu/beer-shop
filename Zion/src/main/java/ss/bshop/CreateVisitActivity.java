@@ -26,7 +26,7 @@ public class CreateVisitActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "created");
 		setContentView(R.layout.createvisit);
-		prepareSpinner();
+
 		Button close = (Button) findViewById(R.id.closeVisitButton);
 		close.setOnClickListener(new OnClickListener() {
 			@Override
@@ -52,19 +52,6 @@ public class CreateVisitActivity extends Activity {
 		});
 	}
 
-	private void prepareSpinner() {
-		ArrayAdapter outletNames = new ArrayAdapter(this,
-				android.R.layout.simple_spinner_item);
-		List<OutletMobile> outlets = Communicator
-				.getOutletsForToday(Global.username);
-		for (OutletMobile outlet : outlets) {
-			outletNames.add(outlet.getName());
-		}
-		Spinner outletNamesSpinner = (Spinner) findViewById(R.id.outlets);
-		outletNames.setDropDownViewResource(
-				android.R.layout.simple_spinner_dropdown_item);
-		outletNamesSpinner.setAdapter(outletNames);
-	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
