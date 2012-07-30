@@ -33,6 +33,13 @@ public class SelectActionActivity extends Activity {
 				startActivity(createVisit);
 			}
         });
+        Button exit = (Button) findViewById(R.id.exitButton);
+        exit.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View arg0) {
+				SelectActionActivity.this.finish();
+			}
+        });
     }
 
 }

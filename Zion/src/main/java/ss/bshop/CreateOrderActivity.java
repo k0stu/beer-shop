@@ -1,6 +1,10 @@
 package ss.bshop;
 
+import java.util.ArrayList;
+
 import ss.bshop.R;
+import ss.bshop.mobile.entities.ArticleMobile;
+import ss.bshop.mobile.entities.OutletOrderStructureMobile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,6 +20,9 @@ public class CreateOrderActivity extends Activity {
 	// ==== actions ====
 	private static final int ADD = 0xADD;
 	private static final int EDIT = 0xED17;
+	// ==== ======= ====
+	ArrayList<OutletOrderStructureMobile> orderList =
+			new ArrayList<OutletOrderStructureMobile>();
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,5 +86,17 @@ public class CreateOrderActivity extends Activity {
 				// TODO add here edit item logics
 			}
 		}
+	}
+	/**
+	 * Use this method to add an article to order table
+	 * @param article
+	 */
+	private void addArticleToTable(ArticleMobile article, int qty) {
+		OutletOrderStructureMobile row = new OutletOrderStructureMobile();
+		row.setArticle(article);
+		row.setAmount(qty);
+		row.setPrice(article.getPrice());
+		orderList.add(row);
+		// TODO still need to full table view
 	}
 }
