@@ -39,10 +39,12 @@ public class CreateVisitActivity extends Activity {
 			@Override
 			public void onClick(View view) {
 				// TODO: here comes saving logics
+				CreateVisitActivity.this.finish();
 			}
 		});
-		Button createOrder = (Button) findViewById(R.id.closeVisitButton);
-		close.setOnClickListener(new OnClickListener() {
+		Button createOrder = (Button) findViewById(
+				R.id.createOrderInVisitButton);
+		createOrder.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				Intent createOrder = new Intent(CreateVisitActivity.this,

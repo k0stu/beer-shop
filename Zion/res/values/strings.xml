@@ -17,7 +17,7 @@
     <string name="closeVisit">Close</string>
     <string name="outletsLabel">Outlet:</string>
     
-    <!--  Create order labels -->
+    <!-- Create order labels -->
     <string name="createOrderLabel">Create order</string>
     <string name="orderTypeLabel">Order type:</string>
     	<!-- Spinner data array for Order type -->
@@ -29,5 +29,10 @@
     <string name="editItemLabel">Edit item</string>
     <string name="removeItemLabel">Remove item</string>
     <string name="saveOrderLabel">Save</string>
-    <string name="cancelOrderLabel">Cancel</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Add n edit goods labels -->
+    <string name="articleLabel">Article:</string>
+    <string name="qty">Quantity</string>
+    <string name="ok">OK</string>
 </resources>
