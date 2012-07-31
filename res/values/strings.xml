@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title">BeerShop mobile application ver 1.0.0.0001</string>
+    <string name="app_name">Zion</string>
+    
+    <!-- Select action labels -->
+    <string name="create">Create order / return</string>
+    <string name="openMap">Open map</string>
+    <string name="openJournal">Open journal</string>
+    <string name="exit">Exit</string>
+    
+    <!-- Create visit labels -->
+    <string name="createVisit">Create visit</string>
+    <string name="visitInfo">Visit info:</string>
+    <string name="createOrder">Create order</string>
+    <string name="saveVisit">Save</string>
+    <string name="closeVisit">Close</string>
+    <string name="outletsLabel">Outlet:</string>
+    
+    <!-- Create order labels -->
+    <string name="createOrderLabel">Create order</string>
+    <string name="orderTypeLabel">Order type:</string>
+    	<!-- Spinner data array for Order type -->
+    	<string-array name="orderType">
+    	    <item>Order</item>
+    	    <item>Return</item>
+    	</string-array>
+    <string name="addItemLabel">Add item</string>
+    <string name="editItemLabel">Edit item</string>
+    <string name="removeItemLabel">Remove item</string>
+    <string name="saveOrderLabel">Save</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Add n edit goods labels -->
+    <string name="articleLabel">Article:</string>
+    <string name="qty">Quantity</string>
+    <string name="ok">OK</string>
+</resources>
