@@ -80,7 +80,16 @@ public class CreateOrderActivity extends Activity {
 			Intent addnedit = new Intent(CreateOrderActivity.this,
 					AddEditActivity.class);
 			if (action == EDIT) {
-				
+				javax.swing.text.TableView.TableRow toEdit = table.getSelectedRow();
+				TextView articleNameView = (TextView) toEdit.getView(0);
+				String articleName = articlenameView.getText().toString();
+				TextView qtyView = (TextView) toEdit.getView(1);
+				int qty = Integer.parseInt(qtyView.getText().toString());
+				OutletOrderStructureMobile oosmToEdit = new OutletOrderStructureMobile();
+				oosmToEdit.setArticle(Global.goods.get(articleName));
+				oosmToEdit.setAmount(qty);
+				Global.objectStorage.put("toEdit", oosmToEdit);
+				addnedit.putExtra("key", "toEdit");
 			}
 			startActivityForResult(addnedit, action);
 		}		
@@ -94,6 +103,7 @@ public class CreateOrderActivity extends Activity {
 				OutletOrderStructureMobile orderRow =
 						(OutletOrderStructureMobile) Global
 						.objectStorage.get(key);
+				Global.objectStorage.remove(key);
 				this.addArticleToTable(orderRow);
 			}
 			if (requestCode == EDIT) {
@@ -107,7 +117,7 @@ public class CreateOrderActivity extends Activity {
 	 */
 	private void addArticleToTable(OutletOrderStructureMobile row) {
 		orderList.add(row);
-		TableRow tr = new TableRow(this);
+		final TableRow tr = new TableRow(this);
 		tr.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
 				LayoutParams.WRAP_CONTENT));
 		TextView articleName = new TextView(this);
@@ -120,6 +130,12 @@ public class CreateOrderActivity extends Activity {
 		qty.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		tr.addView(qty);
+		tr.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				table.setSelectedRow(tr);
+			}
+		});
 		table.addView(tr, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 	}

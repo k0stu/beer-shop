@@ -18,12 +18,25 @@ import android.widget.Spinner;
 
 public class AddEditActivity extends Activity {
 	private static final String TAG = "AddEditActivity";
+	private Spinner goodsSpinner = null;
+	private ArrayAdapter goodsAdapter = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "created");
 		setContentView(R.layout.addedit);
+		goodsSpinner = (Spinner) findViewById(R.id.goodsSpinner);
 		fillSpinner();
+		Intent incoming = this.getIntent();
+		String key = incoming.getStringExtra("key");
+		if (key != null) {
+			OutletOrderStructureMobile oosmToEdit =
+					(OutletOrderStructureMobile) Global.objectStorage.get(key);
+			int articlePosition = goodsAdapter.getPosition(oosmToEdit.getArticle().getName());
+			goodsSpinner.setSelection(articlePosition);
+			EditText qtyEdit = (EditText) findViewById(R.id.goodsQty);
+			qtyEdit.setText(oosmToEdit.getAmount());
+		}
 		Button ok = (Button) findViewById(R.id.goodsOk);
 		ok.setOnClickListener(new OnClickListener(){
 			@Override
@@ -54,9 +67,12 @@ public class AddEditActivity extends Activity {
 			}
 		});
 	}
+	private int getPositionForName(String name) {
+		
+		return 0;
+	}
 	private void fillSpinner() {
-		Spinner goodsSpinner = (Spinner) findViewById(R.id.goodsSpinner);
-		ArrayAdapter goodsAdapter = new ArrayAdapter(this,
+		goodsAdapter = new ArrayAdapter(this,
 				android.R.layout.simple_spinner_item);
 		Set<String> articleNames = Global.goods.keySet();
 		goodsAdapter.addAll(articleNames);

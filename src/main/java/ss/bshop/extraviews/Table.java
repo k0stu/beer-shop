@@ -11,11 +11,11 @@ public class Table extends TableLayout {
 		super(context);
 	}
 
-	public void setSelected(TableRow tr) {
+	public void setSelectedRow(TableRow tr) {
 		this.selected = tr;
 	}
 
-	public TableRow getSelected() {
+	public TableRow getSelectedRow() {
 		return selected;
 	}
 }
