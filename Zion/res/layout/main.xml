@@ -29,6 +29,12 @@
     android:text="@string/openJournal" />
 
 <Button
+    android:id="@+id/synchroButton"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="@string/synchro" />
+
+<Button
     android:id="@+id/exitButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
