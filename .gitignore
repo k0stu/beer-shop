@@ -30,3 +30,4 @@ RCSLOG
 SCCS
 _$*
 target/maven-archiver/pom.properties
+target
