@@ -89,9 +89,10 @@ public class CreateOrderActivity extends Activity {
 			Intent data) {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == ADD) {
+				String key = data.getStringExtra("key");
 				OutletOrderStructureMobile orderRow =
-						(OutletOrderStructureMobile) data.getExtras()
-						.get("newrow");
+						(OutletOrderStructureMobile) Global
+						.objectStorage.get(key);
 				this.addArticleToTable(orderRow);
 			}
 			if (requestCode == EDIT) {

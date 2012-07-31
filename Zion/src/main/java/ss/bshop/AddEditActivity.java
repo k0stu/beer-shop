@@ -3,13 +3,17 @@ package ss.bshop;
 import java.util.Set;
 
 import ss.bshop.R;
+import ss.bshop.mobile.entities.ArticleMobile;
+import ss.bshop.mobile.entities.OutletOrderStructureMobile;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 public class AddEditActivity extends Activity {
@@ -26,7 +30,19 @@ public class AddEditActivity extends Activity {
 			public void onClick(View arg0) {
 				Spinner goodsSpinner =
 						(Spinner) findViewById(R.id.goodsSpinner);
-				// TODO returning OutletOrderStructureMobile object
+				String articleName = (String) goodsSpinner.getSelectedItem();
+				ArticleMobile article = Global.goods.get(articleName);
+				EditText qtyEdit = (EditText) findViewById(R.id.goodsQty);
+				int qty = Integer.parseInt(qtyEdit.getText().toString());
+				OutletOrderStructureMobile orderRow =
+						new OutletOrderStructureMobile();
+				orderRow.setArticle(article);
+				orderRow.setAmount(qty);
+				orderRow.setPrice(qty * article.getPrice());
+				Global.objectStorage.put("orderRow", orderRow);
+				Intent result = new Intent();
+				result.putExtra("key", "orderRow");
+				setResult(RESULT_OK, result);
 				AddEditActivity.this.finish();
 			}
 		});
@@ -43,7 +59,7 @@ public class AddEditActivity extends Activity {
 		ArrayAdapter goodsAdapter = new ArrayAdapter(this,
 				android.R.layout.simple_spinner_item);
 		Set<String> articleNames = Global.goods.keySet();
-		goodsAdapter.add(articleNames);
+		goodsAdapter.addAll(articleNames);
 		goodsSpinner.setAdapter(goodsAdapter);
 	}
 }

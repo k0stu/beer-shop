@@ -40,6 +40,14 @@ public class SelectActionActivity extends Activity {
 				SelectActionActivity.this.finish();
 			}
         });
+        Button synchro = (Button) findViewById(R.id.synchro);
+        synchro.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View arg0) {
+				// TODO Synchronizing logics here
+			}
+
+        });
     }
 
 }
