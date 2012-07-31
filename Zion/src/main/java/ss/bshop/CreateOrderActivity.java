@@ -6,6 +6,7 @@ import ss.bshop.R;
 import ss.bshop.mobile.entities.ArticleMobile;
 import ss.bshop.mobile.entities.OutletOrderStructureMobile;
 import android.app.Activity;
+import android.app.ActionBar.LayoutParams;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,9 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 public class CreateOrderActivity extends Activity {
 	private static final String TAG = "CreateOrderActivity";
@@ -21,6 +25,7 @@ public class CreateOrderActivity extends Activity {
 	private static final int ADD = 0xADD;
 	private static final int EDIT = 0xED17;
 	// ==== ======= ====
+	private TableLayout table = null;
 	ArrayList<OutletOrderStructureMobile> orderList =
 			new ArrayList<OutletOrderStructureMobile>();
 	@Override
@@ -28,6 +33,7 @@ public class CreateOrderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "created");
 		setContentView(R.layout.createorder);
+		table = (TableLayout) findViewById(R.id.orderTable);
 		Spinner orderTypeSpinner = 
 				(Spinner) findViewById(R.id.orderTypeSpinner);
 		ArrayAdapter<CharSequence> orderTypes = ArrayAdapter
@@ -72,6 +78,9 @@ public class CreateOrderActivity extends Activity {
 		public void onClick(View arg0) {
 			Intent addnedit = new Intent(CreateOrderActivity.this,
 					AddEditActivity.class);
+			if (action == EDIT) {
+				
+			}
 			startActivityForResult(addnedit, action);
 		}		
 	}
@@ -80,7 +89,10 @@ public class CreateOrderActivity extends Activity {
 			Intent data) {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == ADD) {
-				// TODO add here new item logics
+				OutletOrderStructureMobile orderRow =
+						(OutletOrderStructureMobile) data.getExtras()
+						.get("newrow");
+				this.addArticleToTable(orderRow);
 			}
 			if (requestCode == EDIT) {
 				// TODO add here edit item logics
@@ -91,12 +103,22 @@ public class CreateOrderActivity extends Activity {
 	 * Use this method to add an article to order table
 	 * @param article
 	 */
-	private void addArticleToTable(ArticleMobile article, int qty) {
-		OutletOrderStructureMobile row = new OutletOrderStructureMobile();
-		row.setArticle(article);
-		row.setAmount(qty);
-		row.setPrice(article.getPrice());
+	private void addArticleToTable(OutletOrderStructureMobile row) {
 		orderList.add(row);
-		// TODO still need to full table view
+		TableRow tr = new TableRow(this);
+		tr.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
+				LayoutParams.WRAP_CONTENT));
+		TextView articleName = new TextView(this);
+		articleName.setText(row.getArticle().getName());
+		articleName.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		tr.addView(articleName);
+		TextView qty = new TextView(this);
+		qty.setText(row.getAmount());
+		qty.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
+		tr.addView(qty);
+		table.addView(tr, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
+				LayoutParams.WRAP_CONTENT));
 	}
 }
