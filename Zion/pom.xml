@@ -35,13 +35,6 @@
         	<artifactId>spring-android-rest-template</artifactId>
         	<version>1.0.0.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>ss.bshop.mobile</groupId>
-            <artifactId>entities</artifactId>
-            <version>0.1</version>
-        </dependency>
- <!-- Возможно, для добавления jar в репозиторий нужна следующая команда -->
- <!-- mvn install:install-file -Dfile=lib/ss-bshop-mobile-entities.jar -DgroupId=ss.bshop.mobile -DartifactId=entities -Dversion=0.1 -Dpackaging=jar -DrepositoryId=localFileRepository -->
     </dependencies>
 
     <build>
