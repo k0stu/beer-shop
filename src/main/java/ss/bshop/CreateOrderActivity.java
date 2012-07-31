@@ -3,6 +3,7 @@ package ss.bshop;
 import java.util.ArrayList;
 
 import ss.bshop.R;
+import ss.bshop.extraviews.Table;
 import ss.bshop.mobile.entities.ArticleMobile;
 import ss.bshop.mobile.entities.OutletOrderStructureMobile;
 import android.app.Activity;
@@ -25,7 +26,7 @@ public class CreateOrderActivity extends Activity {
 	private static final int ADD = 0xADD;
 	private static final int EDIT = 0xED17;
 	// ==== ======= ====
-	private TableLayout table = null;
+	private Table table = null;
 	ArrayList<OutletOrderStructureMobile> orderList =
 			new ArrayList<OutletOrderStructureMobile>();
 	@Override
@@ -33,7 +34,7 @@ public class CreateOrderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		Log.i(TAG, "created");
 		setContentView(R.layout.createorder);
-		table = (TableLayout) findViewById(R.id.orderTable);
+		table = (Table) findViewById(R.id.orderTable);
 		Spinner orderTypeSpinner = 
 				(Spinner) findViewById(R.id.orderTypeSpinner);
 		ArrayAdapter<CharSequence> orderTypes = ArrayAdapter
