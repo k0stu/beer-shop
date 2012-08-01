@@ -38,7 +38,7 @@ public class Communicator {
 		return response;
 	}
 
-	public void addOrder(VisitMobile visit) {
+	public static void addVisit(VisitMobile visit) {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		requestHeaders.setAccept(mediaTypes);
 		HttpEntity<VisitMobile> entity = new HttpEntity(visit, requestHeaders);

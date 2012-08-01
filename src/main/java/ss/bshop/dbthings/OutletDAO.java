@@ -3,7 +3,6 @@ package ss.bshop.dbthings;
 import java.sql.SQLException;
 import java.util.List;
 
-import ss.bshop.mobile.entities.ArticleMobile;
 import ss.bshop.mobile.entities.OutletMobile;
 
 import com.j256.ormlite.dao.BaseDaoImpl;
@@ -18,5 +17,9 @@ public class OutletDAO extends BaseDaoImpl<OutletMobile, Integer> {
 
 	public List<OutletMobile> getAllOutlets() throws SQLException {
 		return this.queryForAll();
+	}
+
+	public void saveAllOutlets(List<OutletMobile> outlets) {
+		this.saveAllOutlets(outlets);
 	}
 }

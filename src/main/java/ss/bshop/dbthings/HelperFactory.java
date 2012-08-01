@@ -8,16 +8,16 @@ public class HelperFactory {
 
 	private static DatabaseHelper databaseHelper;
 	   
-	public static DatabaseHelper GetHelper(){
+	public static DatabaseHelper getHelper(){
 		return databaseHelper;
 	}
 	
-	public static void SetHelper(Context context){
+	public static void setHelper(Context context){
 		databaseHelper = OpenHelperManager.getHelper(context,
 				DatabaseHelper.class);
 	}
 	
-	public static void ReleaseHelper(){
+	public static void releaseHelper(){
 		OpenHelperManager.releaseHelper();
 		databaseHelper = null;
 	}

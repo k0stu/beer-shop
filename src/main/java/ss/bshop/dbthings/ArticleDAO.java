@@ -18,4 +18,7 @@ public class ArticleDAO extends BaseDaoImpl<ArticleMobile, Integer> {
 	public List<ArticleMobile> getAllArticles() throws SQLException {
 		return this.queryForAll();
 	}
+	public void saveAllArticles(List<ArticleMobile> articles) {
+		this.saveAllArticles(articles);
+	}
 }

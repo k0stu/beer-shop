@@ -4,11 +4,12 @@ import java.util.ArrayList;
 
 import ss.bshop.R;
 import ss.bshop.extraviews.Table;
-import ss.bshop.mobile.entities.ArticleMobile;
+import ss.bshop.mobile.entities.OutletOrderMobile;
 import ss.bshop.mobile.entities.OutletOrderStructureMobile;
 import android.app.Activity;
-import android.app.ActionBar.LayoutParams;
+import android.widget.TableRow.LayoutParams;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,8 +41,6 @@ public class CreateOrderActivity extends Activity {
 		ArrayAdapter<CharSequence> orderTypes = ArrayAdapter
 				.createFromResource(this, R.array.orderType, 
 				android.R.layout.simple_spinner_item);
-		orderTypes.setDropDownViewResource(
-				android.R.layout.simple_spinner_dropdown_item);
 		orderTypeSpinner.setAdapter(orderTypes);
 		Button cancel = (Button) findViewById(R.id.cancelOrderButton);
 		cancel.setOnClickListener(new OnClickListener(){
@@ -54,7 +53,26 @@ public class CreateOrderActivity extends Activity {
 		save.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View arg0) {
-				// TODO: create and return OutletOrderMobile object logics
+				Global.objectStorage.put("orderList", orderList);
+				OutletOrderMobile order = new OutletOrderMobile();
+				Spinner orderTypeSpinner = 
+						(Spinner) findViewById(R.id.orderTypeSpinner);
+				String orderType = (String) orderTypeSpinner.getSelectedItem();
+				order.setType(orderType);
+				double payment = 0;
+				for (OutletOrderStructureMobile orderRow : orderList) {
+					double price = orderRow.getPrice();
+					int amount = orderRow.getAmount();
+					double perRowPayment = price * amount;
+					payment += perRowPayment;
+				}
+				order.setPayment(payment);
+				order.setDiscount((byte) 0);
+				order.setStructure(orderList);
+				Global.objectStorage.put("order", order);
+				Intent result = CreateOrderActivity.this.getIntent();
+				result.putExtra("key", "order");
+				setResult(RESULT_OK, result);
 				CreateOrderActivity.this.finish();
 			}
 		});
@@ -66,7 +84,12 @@ public class CreateOrderActivity extends Activity {
 		removeItem.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO add "remove item" logics here
+				TableRow toRemove = table.getSelectedRow();
+				table.removeView(toRemove);
+				OutletOrderStructureMobile orderRow =
+						CreateOrderActivity.this
+						.getOrderRowForTableRow(toRemove);
+				orderList.remove(toRemove);
 			}
 		});
 	}
@@ -81,35 +104,45 @@ public class CreateOrderActivity extends Activity {
 					AddEditActivity.class);
 			if (action == EDIT) {
 				TableRow toEdit = table.getSelectedRow();
-				TextView articleNameView = (TextView) toEdit.getChildAt(0);
-				String articleName = articleNameView.getText().toString();
-				TextView qtyView = (TextView) toEdit.getChildAt(1);
-				int qty = Integer.parseInt(qtyView.getText().toString());
-				OutletOrderStructureMobile oosmToEdit = new OutletOrderStructureMobile();
-				oosmToEdit.setArticle(Global.goods.get(articleName));
-				oosmToEdit.setAmount(qty);
+				OutletOrderStructureMobile oosmToEdit =
+						CreateOrderActivity.this.getOrderRowForTableRow(toEdit);
 				Global.objectStorage.put("toEdit", oosmToEdit);
 				addnedit.putExtra("key", "toEdit");
 			}
 			startActivityForResult(addnedit, action);
-		}		
+		}
 	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode,
 			Intent data) {
 		if (resultCode == RESULT_OK) {
+			String key = data.getStringExtra("key");
+			OutletOrderStructureMobile orderRow =
+					(OutletOrderStructureMobile) Global
+					.objectStorage.get(key);
+			Global.objectStorage.remove(key);
 			if (requestCode == ADD) {
-				String key = data.getStringExtra("key");
-				OutletOrderStructureMobile orderRow =
-						(OutletOrderStructureMobile) Global
-						.objectStorage.get(key);
-				Global.objectStorage.remove(key);
 				this.addArticleToTable(orderRow);
 			}
 			if (requestCode == EDIT) {
-				// TODO add here edit item logics
+				this.editArticleInTable(orderRow);
 			}
 		}
+	}
+	private OutletOrderStructureMobile getOrderRowForTableRow(TableRow row) {
+		OutletOrderStructureMobile toReturn = null;
+		TextView articleNameView = (TextView) row.getChildAt(0);
+		String articleName = articleNameView.getText().toString();
+		TextView qtyView = (TextView) row.getChildAt(1);
+		int qty = Integer.parseInt(qtyView.getText().toString());
+		for (OutletOrderStructureMobile orderRow : orderList) {
+			if (orderRow.getArticle().getName().equals(articleName) &&
+					orderRow.getAmount() == qty) {
+				toReturn = orderRow;
+				break;
+			}
+		}
+		return toReturn;
 	}
 	/**
 	 * Use this method to add an article to order table
@@ -118,25 +151,38 @@ public class CreateOrderActivity extends Activity {
 	private void addArticleToTable(OutletOrderStructureMobile row) {
 		orderList.add(row);
 		final TableRow tr = new TableRow(this);
-		tr.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT));
+		LayoutParams params = new LayoutParams();
+		params.setMargins(0, 0, 0, 1);
+		tr.setLayoutParams(params);
 		TextView articleName = new TextView(this);
 		articleName.setText(row.getArticle().getName());
 		articleName.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		tr.addView(articleName);
 		TextView qty = new TextView(this);
-		qty.setText(row.getAmount());
+		qty.setText(String.valueOf(row.getAmount()));
 		qty.setLayoutParams(new LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
 		tr.addView(qty);
 		tr.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
+				TableRow previous = table.getSelectedRow();
+				if (previous != null) {
+					previous.setBackgroundColor(Color.BLACK);
+				}
 				table.setSelectedRow(tr);
+				tr.setBackgroundColor(Color.GRAY);
 			}
 		});
 		table.addView(tr, new TableLayout.LayoutParams(LayoutParams.FILL_PARENT,
 				LayoutParams.WRAP_CONTENT));
+	}
+	private void editArticleInTable(OutletOrderStructureMobile row) {
+		TableRow selected = table.getSelectedRow();
+		TextView articleNameView = (TextView) selected.getChildAt(0);
+		articleNameView.setText(row.getArticle().getName());
+		TextView qtyView = (TextView) selected.getChildAt(1);
+		qtyView.setText(String.valueOf(row.getAmount()));
 	}
 }

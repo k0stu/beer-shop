@@ -20,6 +20,7 @@ public class AddEditActivity extends Activity {
 	private static final String TAG = "AddEditActivity";
 	private Spinner goodsSpinner = null;
 	private ArrayAdapter goodsAdapter = null;
+	private OutletOrderStructureMobile orderRow = null;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -30,12 +31,13 @@ public class AddEditActivity extends Activity {
 		Intent incoming = this.getIntent();
 		String key = incoming.getStringExtra("key");
 		if (key != null) {
-			OutletOrderStructureMobile oosmToEdit =
+			orderRow =
 					(OutletOrderStructureMobile) Global.objectStorage.get(key);
-			int articlePosition = goodsAdapter.getPosition(oosmToEdit.getArticle().getName());
+			int articlePosition = goodsAdapter.getPosition(orderRow.getArticle()
+					.getName());
 			goodsSpinner.setSelection(articlePosition);
 			EditText qtyEdit = (EditText) findViewById(R.id.goodsQty);
-			qtyEdit.setText(oosmToEdit.getAmount());
+			qtyEdit.setText(String.valueOf(orderRow.getAmount()));
 		}
 		Button ok = (Button) findViewById(R.id.goodsOk);
 		ok.setOnClickListener(new OnClickListener(){
@@ -47,15 +49,17 @@ public class AddEditActivity extends Activity {
 				ArticleMobile article = Global.goods.get(articleName);
 				EditText qtyEdit = (EditText) findViewById(R.id.goodsQty);
 				int qty = Integer.parseInt(qtyEdit.getText().toString());
-				OutletOrderStructureMobile orderRow =
-						new OutletOrderStructureMobile();
+				if (orderRow == null) {
+					orderRow = new OutletOrderStructureMobile();
+				}
 				orderRow.setArticle(article);
 				orderRow.setAmount(qty);
 				orderRow.setPrice(qty * article.getPrice());
 				Global.objectStorage.put("orderRow", orderRow);
-				Intent result = new Intent();
+				Intent result = AddEditActivity.this.getIntent();
 				result.putExtra("key", "orderRow");
 				setResult(RESULT_OK, result);
+				orderRow = null;
 				AddEditActivity.this.finish();
 			}
 		});

@@ -3,6 +3,7 @@ package ss.bshop;
 import java.util.Hashtable;
 
 import ss.bshop.mobile.entities.ArticleMobile;
+import ss.bshop.mobile.entities.OutletMobile;
 
 public class Global {
 	public static String username = "";
@@ -21,4 +22,5 @@ public class Global {
 	 * it.
 	 */
 	public static Hashtable<String, Object> objectStorage = new Hashtable();
+	public static Hashtable<String, OutletMobile> outlets = new Hashtable();
 }

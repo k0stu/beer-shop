@@ -1,6 +1,16 @@
 package ss.bshop;
 
+import java.sql.SQLException;
+import java.util.List;
+
 import ss.bshop.R;
+import ss.bshop.communication.Communicator;
+import ss.bshop.communication.TestingCommunicator;
+import ss.bshop.dbthings.ArticleDAO;
+import ss.bshop.dbthings.HelperFactory;
+import ss.bshop.dbthings.OutletDAO;
+import ss.bshop.mobile.entities.ArticleMobile;
+import ss.bshop.mobile.entities.OutletMobile;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,6 +33,22 @@ public class SelectActionActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 		Log.i(TAG, "onCreate");
+		HelperFactory.setHelper(getApplicationContext());
+		try {
+			ArticleDAO adao = HelperFactory.getHelper().getArticleDAO();
+			OutletDAO odao = HelperFactory.getHelper().getOutletDAO();
+			List<OutletMobile> outlets = odao.getAllOutlets();
+			List<ArticleMobile> articles = adao.getAllArticles();
+			for (OutletMobile outlet : outlets) {
+				Global.outlets.put(outlet.getName(), outlet);
+			}
+			for (ArticleMobile article : articles) {
+				Global.goods.put(article.getName(), article);
+			}
+		} catch (SQLException e) {
+			Log.e(TAG, "Failed to get data from storage");
+		}
+		
         setContentView(R.layout.main);
         Button create = (Button) findViewById(R.id.createButton);
         create.setOnClickListener(new OnClickListener() {
@@ -44,9 +70,29 @@ public class SelectActionActivity extends Activity {
         synchro.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
-				// TODO Synchronizing logics here
+				Global.goods.clear();
+				List<ArticleMobile> goods = TestingCommunicator.getArticles();
+				for (ArticleMobile article : goods) {
+					Global.goods.put(article.getName(), article);	
+				}
+				try {
+					ArticleDAO adao = HelperFactory.getHelper().getArticleDAO();
+					adao.saveAllArticles(goods);
+				} catch (SQLException e) {
+					Log.e(TAG, "Failed to save new articles");
+				}
+				List<OutletMobile> outlets = TestingCommunicator.
+						getOutletsForToday(Global.username);
+				for (OutletMobile outlet : outlets) {
+					Global.outlets.put(outlet.getName(), outlet);
+				}
+				try {
+					OutletDAO odao = HelperFactory.getHelper().getOutletDAO();
+					odao.saveAllOutlets(outlets);
+				} catch (SQLException e) {
+					Log.e(TAG, "Failed to save new outlets");
+				}
 			}
-
         });
     }
 
