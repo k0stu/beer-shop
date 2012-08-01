@@ -80,10 +80,10 @@ public class CreateOrderActivity extends Activity {
 			Intent addnedit = new Intent(CreateOrderActivity.this,
 					AddEditActivity.class);
 			if (action == EDIT) {
-				javax.swing.text.TableView.TableRow toEdit = table.getSelectedRow();
-				TextView articleNameView = (TextView) toEdit.getView(0);
-				String articleName = articlenameView.getText().toString();
-				TextView qtyView = (TextView) toEdit.getView(1);
+				TableRow toEdit = table.getSelectedRow();
+				TextView articleNameView = (TextView) toEdit.getChildAt(0);
+				String articleName = articleNameView.getText().toString();
+				TextView qtyView = (TextView) toEdit.getChildAt(1);
 				int qty = Integer.parseInt(qtyView.getText().toString());
 				OutletOrderStructureMobile oosmToEdit = new OutletOrderStructureMobile();
 				oosmToEdit.setArticle(Global.goods.get(articleName));

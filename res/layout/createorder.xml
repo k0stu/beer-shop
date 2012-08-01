@@ -53,14 +53,13 @@
                         android:text="@string/removeItemLabel" />
                 </LinearLayout>
 
-                <View
-                    android:class="ss.bshop.extraviews.Table"
+                <ss.bshop.extraviews.Table
                     android:id="@+id/orderTable"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1.00" >
+                    android:layout_weight="1.00" />
 
-                </View>
+
 
                 <LinearLayout
                     android:layout_width="match_parent"
