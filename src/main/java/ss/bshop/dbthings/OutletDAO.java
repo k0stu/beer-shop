@@ -20,6 +20,6 @@ public class OutletDAO extends BaseDaoImpl<OutletMobile, Integer> {
 	}
 
 	public void saveAllOutlets(List<OutletMobile> outlets) {
-		this.saveAllOutlets(outlets);
+		// TODO fill stub
 	}
 }
