@@ -30,7 +30,7 @@ public class Communicator {
 	@SuppressWarnings("unchecked")
 	public static List<OutletMobile> getOutletsForToday(String username) {
 		List response = Communicator.
-				performRequest(uri + "getoutlets/" + username);
+				performRequest(Global.server + uri + "getoutlets/" + username);
 		return response;
 	}
 
@@ -53,21 +53,28 @@ public class Communicator {
 
 	private static List performRequest(String finalUri) {
 		HttpHeaders requestHeaders = new HttpHeaders();
+		Log.d(TAG, "Created headers");
 		requestHeaders.setAccept(mediaTypes);
+		Log.d(TAG, "Set accepted media types");
 		HttpEntity<?> requestEntity = new HttpEntity<Object>(requestHeaders);
+		Log.d(TAG, "Created request entity");
 		RestTemplate template = new RestTemplate();
+		Log.d(TAG, "Created rest template");
 		template.getMessageConverters().
 				add(new MappingJacksonHttpMessageConverter());
+		Log.d(TAG, "Added message converter");
 		@SuppressWarnings("rawtypes")
 		ResponseEntity<List> response =
 				template.exchange(finalUri, HttpMethod.GET,
 				requestEntity, List.class);
+		Log.d(TAG, "Fired exchange");
 		List responseList = null;
 		if (response.getBody() instanceof List) {
 			responseList = response.getBody();
 		} else {
-			Log.i(TAG, "Server returned not a list");
+			Log.w(TAG, "Server returned not a list");
 		}
+		Log.d(TAG, "Received list");
 		return responseList;
 
 	}
