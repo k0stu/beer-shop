@@ -17,18 +17,6 @@
     android:text="@string/create" />
 
 <Button
-    android:id="@+id/openMapButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/openMap" />
-
-<Button
-    android:id="@+id/journalButton"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="@string/openJournal" />
-
-<Button
     android:id="@+id/synchroButton"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"

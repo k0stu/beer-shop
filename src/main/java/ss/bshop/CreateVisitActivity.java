@@ -60,7 +60,7 @@ public class CreateVisitActivity extends Activity {
 					visit.setLat(0);
 					visit.setLng(0);
 				}
-				TestingCommunicator.addVisit(visit);
+				Communicator.addVisit(visit);
 				CreateVisitActivity.this.finish();
 			}
 
@@ -82,8 +82,6 @@ public class CreateVisitActivity extends Activity {
 		outletsSpinner = (Spinner) findViewById(R.id.outlets);
 		ArrayAdapter outletsAdapter = new ArrayAdapter(this,
 				android.R.layout.simple_spinner_item);
-		outletsAdapter.setDropDownViewResource(
-				android.R.layout.simple_spinner_dropdown_item);
 		outletsAdapter.addAll(Global.outlets.keySet());
 		outletsSpinner.setAdapter(outletsAdapter);
 	}

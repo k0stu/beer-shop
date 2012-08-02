@@ -36,4 +36,10 @@
     <string name="articleLabel">Article:</string>
     <string name="qty">Quantity</string>
     <string name="ok">OK</string>
+    
+    <!-- Login screen -->
+    <string name="login">Login</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
+    <string name="server">Server:</string>
 </resources>

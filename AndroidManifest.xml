@@ -6,15 +6,16 @@
   	<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application android:icon="@drawable/icon" android:label="@string/app_name">
       <uses-library android:name="com.google.android.maps" />
-    <activity android:name=".SelectActionActivity">
-      <intent-filter>
-        <action android:name="android.intent.action.MAIN" />
-        <category android:name="android.intent.category.LAUNCHER" />
-      </intent-filter>
-    </activity>
-    <activity android:name=".CreateVisitActivity" />
-    <activity android:name=".CreateOrderActivity" />
-    <activity android:name=".AddEditActivity" />
+	    <activity android:name=".LoginActivity">
+	      <intent-filter>
+	        <action android:name="android.intent.action.MAIN" />
+	        <category android:name="android.intent.category.LAUNCHER" />
+	      </intent-filter>
+	    </activity>
+	    <activity android:name=".CreateVisitActivity" />
+	    <activity android:name=".CreateOrderActivity" />
+	    <activity android:name=".AddEditActivity" />
+	    <activity android:name=".SelectActionActivity" />
   </application>
 </manifest>
 

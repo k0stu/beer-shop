@@ -7,6 +7,8 @@ import ss.bshop.mobile.entities.OutletMobile;
 
 public class Global {
 	public static String username = "";
+	public static String password = "";
+	public static String server = "";
 	/**
 	 * Goods are stored in string-article pairs, where string represents good's
 	 * name. This is made for easy using of android spinners (getting names for

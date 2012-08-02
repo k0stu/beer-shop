@@ -13,6 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 import android.util.Log;
 
+import ss.bshop.Global;
 import ss.bshop.mobile.entities.ArticleMobile;
 import ss.bshop.mobile.entities.OutletMobile;
 import ss.bshop.mobile.entities.VisitMobile;
@@ -34,7 +35,8 @@ public class Communicator {
 	}
 
 	public static List<ArticleMobile> getArticles() {
-		List response = Communicator.performRequest(uri + "getgoods");
+		List response = Communicator
+				.performRequest(Global.server + uri + "getgoods");
 		return response;
 	}
 
@@ -45,7 +47,7 @@ public class Communicator {
 		RestTemplate template = new RestTemplate();
 		template.getMessageConverters().
 				add(new MappingJacksonHttpMessageConverter());
-		String finalUri = uri + "addvisit";
+		String finalUri = Global.server + uri + "addvisit";
 		template.exchange(finalUri, HttpMethod.POST, entity, Void.class);
 	}
 

@@ -71,24 +71,24 @@ public class SelectActionActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Global.goods.clear();
-				List<ArticleMobile> goods = TestingCommunicator.getArticles();
+				List<ArticleMobile> goods = Communicator.getArticles();
 				for (ArticleMobile article : goods) {
 					Global.goods.put(article.getName(), article);	
 				}
 				try {
 					ArticleDAO adao = HelperFactory.getHelper().getArticleDAO();
-					adao.saveAllArticles(goods);
+					adao.saveAll(goods);
 				} catch (SQLException e) {
 					Log.e(TAG, "Failed to save new articles");
 				}
-				List<OutletMobile> outlets = TestingCommunicator.
+				List<OutletMobile> outlets = Communicator.
 						getOutletsForToday(Global.username);
 				for (OutletMobile outlet : outlets) {
 					Global.outlets.put(outlet.getName(), outlet);
 				}
 				try {
 					OutletDAO odao = HelperFactory.getHelper().getOutletDAO();
-					odao.saveAllOutlets(outlets);
+					odao.saveAll(outlets);
 				} catch (SQLException e) {
 					Log.e(TAG, "Failed to save new outlets");
 				}
