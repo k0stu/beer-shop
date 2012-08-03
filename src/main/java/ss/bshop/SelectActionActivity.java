@@ -71,7 +71,7 @@ public class SelectActionActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Global.goods.clear();
-				List<ArticleMobile> goods = Communicator.getArticles();
+				List<ArticleMobile> goods = TestingCommunicator.getArticles();
 				for (ArticleMobile article : goods) {
 					Global.goods.put(article.getName(), article);	
 				}
@@ -81,7 +81,7 @@ public class SelectActionActivity extends Activity {
 				} catch (SQLException e) {
 					Log.e(TAG, "Failed to save new articles");
 				}
-				List<OutletMobile> outlets = Communicator.
+				List<OutletMobile> outlets = TestingCommunicator.
 						getOutletsForToday(Global.username);
 				for (OutletMobile outlet : outlets) {
 					Global.outlets.put(outlet.getName(), outlet);

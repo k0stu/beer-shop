@@ -60,7 +60,7 @@ public class CreateVisitActivity extends Activity {
 					visit.setLat(0);
 					visit.setLng(0);
 				}
-				Communicator.addVisit(visit);
+				TestingCommunicator.addVisit(visit);
 				CreateVisitActivity.this.finish();
 			}
 
