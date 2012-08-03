@@ -15,6 +15,7 @@ public class TestingCommunicator {
 			ArticleMobile article = new ArticleMobile();
 			article.setName("beer " + i);
 			article.setPrice(10.51);
+			article.setType("beverage");
 			toReturn.add(article);
 		}
 		return toReturn;

@@ -71,7 +71,7 @@ public class SelectActionActivity extends Activity {
 			@Override
 			public void onClick(View arg0) {
 				Global.goods.clear();
-				List<ArticleMobile> goods = TestingCommunicator.getArticles();
+				List<ArticleMobile> goods = Communicator.getArticles();
 				for (ArticleMobile article : goods) {
 					Global.goods.put(article.getName(), article);	
 				}
@@ -79,9 +79,10 @@ public class SelectActionActivity extends Activity {
 					ArticleDAO adao = HelperFactory.getHelper().getArticleDAO();
 					adao.saveAll(goods);
 				} catch (SQLException e) {
-					Log.e(TAG, "Failed to save new articles");
+					Log.e(TAG, "Failed to save new articles: " + 
+							e.getMessage());
 				}
-				List<OutletMobile> outlets = TestingCommunicator.
+				List<OutletMobile> outlets = Communicator.
 						getOutletsForToday(Global.username);
 				for (OutletMobile outlet : outlets) {
 					Global.outlets.put(outlet.getName(), outlet);
@@ -90,7 +91,8 @@ public class SelectActionActivity extends Activity {
 					OutletDAO odao = HelperFactory.getHelper().getOutletDAO();
 					odao.saveAll(outlets);
 				} catch (SQLException e) {
-					Log.e(TAG, "Failed to save new outlets");
+					Log.e(TAG, "Failed to save new outlets: " + 
+							e.getMessage());
 				}
 			}
         });

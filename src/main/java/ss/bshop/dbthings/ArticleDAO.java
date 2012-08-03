@@ -20,6 +20,7 @@ public class ArticleDAO extends BaseDaoImpl<ArticleMobile, Integer> {
 	public List<ArticleMobile> getAllArticles() throws SQLException {
 		return this.queryForAll();
 	}
+
 	public void saveAll(final List<ArticleMobile> articles) throws SQLException {
 		TransactionManager.callInTransaction(connectionSource,
 				new Callable<Void>() {
