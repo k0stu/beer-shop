@@ -22,6 +22,7 @@ import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 public class CreateVisitActivity extends Activity {
 
@@ -46,21 +47,26 @@ public class CreateVisitActivity extends Activity {
 		save.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				VisitMobile visit = new VisitMobile();
-				visit.setOutletOrder(order);
-				visit.setTime(new Date());
-				String outletName = (String) outletsSpinner.getSelectedItem();
-				OutletMobile outlet = Global.outlets.get(outletName);
-				visit.setOutlet(outlet);
 				try {
-					Location location = getLocation();
-					visit.setLat(location.getLatitude());
-					visit.setLng(location.getLongitude());
-				} catch (NullPointerException npe) {
-					visit.setLat(0);
-					visit.setLng(0);
+					VisitMobile visit = new VisitMobile();
+					visit.setOutletOrder(order);
+					visit.setTime(new Date());
+					String outletName = (String) outletsSpinner.getSelectedItem();
+					OutletMobile outlet = Global.outlets.get(outletName);
+					visit.setOutlet(outlet);
+					try {
+						Location location = getLocation();
+						visit.setLat(location.getLatitude());
+						visit.setLng(location.getLongitude());
+					} catch (NullPointerException npe) {
+						visit.setLat(0);
+						visit.setLng(0);
+					}
+					Communicator.addVisit(visit);
+				} catch (NullPointerException e) {
+					Toast.makeText(CreateVisitActivity.this, e.getMessage(), 8);
+					Log.e(TAG, "Error: " + e.getMessage());
 				}
-				Communicator.addVisit(visit);
 				CreateVisitActivity.this.finish();
 			}
 

@@ -7,7 +7,7 @@
     <string name="create">Create order / return</string>
     <string name="openMap">Open map</string>
     <string name="openJournal">Open journal</string>
-    <string name="synchro">Get articles and outlets for today</string>
+    <string name="synchro">Get articles and outlets</string>
     <string name="exit">Exit</string>
     
     <!-- Create visit labels -->
