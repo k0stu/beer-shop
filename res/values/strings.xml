@@ -2,7 +2,7 @@
 <resources>
     <string name="title">BeerShop mobile application ver 1.0.0.0001</string>
     <string name="app_name">Zion</string>
-    
+	
     <!-- Select action labels -->
     <string name="create">Create order / return</string>
     <string name="openMap">Open map</string>
@@ -42,4 +42,7 @@
     <string name="username">Username:</string>
     <string name="password">Password:</string>
     <string name="server">Server:</string>
+    <string name="defaultServer">23.20.188.116:8080</string>
+    <string name="nologin">Wrong username or password</string>
+    <string name="notnull">Login and password should be not null</string>
 </resources>

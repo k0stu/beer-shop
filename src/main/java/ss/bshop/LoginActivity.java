@@ -1,5 +1,6 @@
 package ss.bshop;
 
+import ss.bshop.communication.Communicator;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends Activity {
 	private static String TAG = "Login Screen";
@@ -33,10 +35,20 @@ public class LoginActivity extends Activity {
 				Global.username = username;
 				Global.password = pwd;
 				Global.server = "http://" + server;
-				Intent intent =
-					new Intent(LoginActivity.this, SelectActionActivity.class);
-				startActivity(intent);
-				
+				if (username.equals("") || pwd.equals("")) {
+					Toast.makeText(getApplicationContext(), R.string.notnull,
+							Toast.LENGTH_SHORT).show();
+					return;
+				}
+				String serverResponse = Communicator.login();
+				if (serverResponse.equals("OK")) {
+					Intent intent = new Intent(LoginActivity.this,
+							SelectActionActivity.class);
+					startActivity(intent);
+				} else {
+					Toast.makeText(getApplicationContext(), R.string.nologin,
+							Toast.LENGTH_SHORT).show();
+				}
 			}
 		});
     }

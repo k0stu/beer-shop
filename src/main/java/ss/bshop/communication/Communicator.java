@@ -8,11 +8,13 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJacksonHttpMessageConverter;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import ss.bshop.Global;
 import ss.bshop.mobile.entities.ArticleMobile;
@@ -23,29 +25,35 @@ public class Communicator {
 
 	private static final String uri = "/BShopMaster/mobile/";
 	private static final String TAG = "Communicator";
+	private static final String extension = ".mob";
 	public static List<OutletMobile> getOutletsForToday(String username) {
 		OutletMobile[] outlets = (OutletMobile[]) Communicator
-			.performRequest(Global.server + uri + "getoutlets/"	+ username,
-					OutletMobile[].class);
+			.performRequest(Global.server + uri + "getoutlets/"	+ username
+					+ extension, OutletMobile[].class);
 		return Arrays.asList(outlets);
 	}
 
 	public static List<ArticleMobile> getArticles() {
 		ArticleMobile[] articles = (ArticleMobile[]) Communicator
-				.performRequest(Global.server + uri + "getgoods",
+				.performRequest(Global.server + uri + "getgoods" + extension,
 						ArticleMobile[].class);
 		return Arrays.asList(articles);
 	}
 
-	public static void addVisit(VisitMobile visit) {
+	public static String addVisit(VisitMobile visit) {
 		HttpHeaders requestHeaders = new HttpHeaders();
 		HttpEntity<VisitMobile> entity = new HttpEntity<VisitMobile>(visit, requestHeaders);
 		RestTemplate template = new RestTemplate();
 		template.getMessageConverters().
+				add(new StringHttpMessageConverter());
+		template.getMessageConverters().
 				add(new MappingJacksonHttpMessageConverter());
-		String finalUri = Global.server + uri + "addvisit";
+		String finalUri = Global.server + uri + "addvisit" + extension;
 		Log.d(TAG, "Hitting the " + finalUri);
-		template.exchange(finalUri, HttpMethod.POST, entity, Void.class);
+		ResponseEntity<String> response = template.exchange(finalUri,
+				HttpMethod.POST, entity, String.class);
+		String responseString = response.getBody();
+		return responseString;
 	}
 
 	private static Object[] performRequest(String finalUri, Class clazz) {
@@ -76,4 +84,18 @@ public class Communicator {
 		return result;
 	}
 
+	public static String login() {
+		String input = Global.username + ":" + Global.password;
+		HttpHeaders requestHeaders = new HttpHeaders();
+		HttpEntity<String> entity = new HttpEntity<String>(input, requestHeaders);
+		RestTemplate template = new RestTemplate();
+		template.getMessageConverters().
+				add(new StringHttpMessageConverter());
+		String finalUri = Global.server + uri + "login" + extension;
+		Log.d(TAG, "Hitting the " + finalUri);
+		ResponseEntity<String> response = template.exchange(finalUri,
+				HttpMethod.POST, entity, String.class);
+		String responseString = response.getBody();
+		return responseString;
+	}
 }

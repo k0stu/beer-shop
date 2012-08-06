@@ -62,12 +62,14 @@ public class CreateVisitActivity extends Activity {
 						visit.setLat(0);
 						visit.setLng(0);
 					}
-					Communicator.addVisit(visit);
+					String serverResponse = Communicator.addVisit(visit);
+					Toast.makeText(getApplicationContext(), serverResponse,
+							Toast.LENGTH_SHORT).show();
 				} catch (NullPointerException e) {
-					Toast.makeText(CreateVisitActivity.this, e.getMessage(), 8);
+					Toast.makeText(CreateVisitActivity.this, e.getMessage(),
+							Toast.LENGTH_SHORT).show();
 					Log.e(TAG, "Error: " + e.getMessage());
 				}
-				CreateVisitActivity.this.finish();
 			}
 
 
